@@ -1,4 +1,5 @@
-import { ComponentBase } from "../../Base/component";
+// import { ComponentBase } from "../../Base/component";
+import { ComponentBase } from "../../../node_modules/edc_base_ts/src/Base/component";
 import { IDropDown } from "./interface";
 
 //component

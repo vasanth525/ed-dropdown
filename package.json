@@ -1,17 +1,21 @@
 {
-  "name": "dropdownlist_ts",
+  "name": "edc_dropdownlist_ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./public/src/DropDownList/Base/dropdownlist.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "jsgen": "cd src && tsc",
     "jswatch": "cd src && tsc -w"
   },
-  "author": "",
+  "author": "vasanth",
   "license": "ISC",
   "dependencies": {
-    "requirejs": "^2.3.6",
-    "ts-loader": "^9.4.1"
+    "edc_base_ts": "1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2"
   }
 }
