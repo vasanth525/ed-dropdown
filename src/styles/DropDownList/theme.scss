@@ -1,0 +1,29 @@
+@import "../fontawesome/scss/fontawesome.scss";
+@import "../fontawesome/scss/solid.scss";
+@import "../fontawesome/scss/brands.scss";
+
+// .user {
+//   @extend %fa-icon;
+//   @extend .fas;
+
+//   &:before {
+//     content: fa-content($fa-var-user);
+//   }
+// }
+
+// .twitter {
+//   @extend %fa-icon;
+//   @extend .fab;
+
+//   &:before {
+//     content: fa-content($fa-var-twitter);
+//   }
+// }
+
+
+.edc-ddl {
+    appearance: initial;
+    height: 35px;
+    width: 200px;
+    border-color: rgb(183, 177, 177);
+}

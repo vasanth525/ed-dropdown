@@ -18,9 +18,7 @@ export class DropDownList extends ComponentBase {
   private createDD() {
     let selectTag: HTMLElement = document.createElement('select');
     selectTag.setAttribute('name', 'customers');
-    selectTag.style.width = '300px';
-    selectTag.style.height = '40px';
-    selectTag.style.border = 'none';
+    selectTag.setAttribute("class", "edc-ddl");
     selectTag.setAttribute('id', 'customers');
     if (!this.dropDown.selectedIndex) {
       let optionTag: HTMLElement = document.createElement('option');

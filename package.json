@@ -8,9 +8,7 @@
     "/dist/src"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "jsgen": "cd src && tsc",
-    "jswatch": "cd src && tsc -w"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "vasanth",
   "license": "ISC",
@@ -21,6 +19,10 @@
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.2",
-    "@types/requirejs": "2.1.34"
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.55.0",
+    "shelljs": "^0.8.5",
+    "run-sequence": "^2.2.1",
+    "@types/requirejs": "^2.1.34"
   }
 }
