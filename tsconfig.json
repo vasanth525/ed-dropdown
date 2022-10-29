@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "amd","moduleResolution": "node",
+    "module": "amd",
+    "moduleResolution": "node",
     "allowJs": true,
     "declaration": true,
     "sourceMap": false,
