@@ -38,5 +38,13 @@
     "shelljs": "^0.8.5",
     "tslib": "^2.4.1",
     "typescript": "4.8.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vasanth525/edc-dropdown.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vasanth525/edc-dropdown/issues"
+  },
+  "homepage": "https://github.com/vasanth525/edc-dropdown#readme"
 }
