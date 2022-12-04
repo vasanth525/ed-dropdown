@@ -1,6 +1,6 @@
 {
   "name": "edc_dropdownlist_ts",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "main": "dist/bundle.js",
   "types": "dist/src/index.d.ts",
@@ -13,9 +13,9 @@
   "author": "vasanth",
   "license": "ISC",
   "dependencies": {
-    "edc_base_ts": "1.0.4",
-    "edc_input_ts": "1.0.1",
-    "edc_popup_ts": "1.0.1"
+    "edc_base_ts": "1.0.5",
+    "edc_input_ts": "1.0.3",
+    "edc_popup_ts": "1.0.3"
   },
   "devDependencies": {
     "rollup-plugin-terser": "^7.0.2",
