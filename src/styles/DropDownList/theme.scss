@@ -21,13 +21,17 @@
 // }
 
 
-.edc-slctag {
-    appearance: initial;
-    height: 35px;
-    width: 200px;
-    padding: 0 45px 0 10px;
+.edc-ddl-input {
+    padding: 0 35px 0 10px;
     border: none;
     border-radius: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+input[readonly] {
+    pointer-events: none;
 }
 
 .edc-ddl-opt {
@@ -38,6 +42,7 @@
     width: fit-content;
     border: 1px solid rgb(177, 174, 174);
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .edc-ddl-icon {
@@ -47,4 +52,32 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transform: rotate(0deg);
+    transition: transform 300ms ease;
+}
+
+.edc-icon-anim .edc-ddl-icon {
+    transform: rotate(180deg);
+    transition: transform 300ms ease;
+}
+
+.edc-popup {
+    margin-top: 3px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    box-shadow: .5px 0 20px -10px gray;
+}
+
+.edc-popup ul {
+    margin: 0;
+    padding: 0;
+}
+
+.edc-popup li {
+    list-style: none;
+    padding: 0 15px;
+    height: 33px;
+    line-height: 33px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

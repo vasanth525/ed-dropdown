@@ -233,14 +233,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fa-beat,
-.fa-bounce,
-.fa-fade,
-.fa-beat-fade,
-.fa-flip,
-.fa-pulse,
-.fa-shake,
-.fa-spin,
-.fa-spin-pulse {
+  .fa-bounce,
+  .fa-fade,
+  .fa-beat-fade,
+  .fa-flip,
+  .fa-pulse,
+  .fa-shake,
+  .fa-spin,
+  .fa-spin-pulse {
     animation-delay: -1ms;
     animation-duration: 1ms;
     animation-iteration-count: 1;

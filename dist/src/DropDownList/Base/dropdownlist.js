@@ -1,53 +1,94 @@
-define(["require", "exports", "edc_base_ts"], function (require, exports, edc_base_ts_1) {
+define(["require", "exports", "edc_base_ts", "edc_popup_ts", "edc_input_ts"], function (require, exports, edc_base_ts_1, edc_popup_ts_1, edc_input_ts_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.DropDownList = void 0;
     //component
     class DropDownList extends edc_base_ts_1.ComponentBase {
         element;
-        dropDown;
+        dropDownObj;
         constructor(sampleObj, element) {
             super(element);
             this.element = element;
-            this.dropDown = sampleObj;
+            this.dropDownObj = sampleObj;
         }
         render() {
             this.createDD();
         }
         createDD() {
             let divElement = document.createElement("div");
-            let selectTag = document.createElement('select');
+            divElement.classList.add("edc-ddl");
+            divElement.id = "dd_input";
+            let inputValue;
+            let selectTag;
+            let optionTags;
             let downIconTag = document.createElement("i");
-            divElement.setAttribute("class", "edc-ddl");
-            selectTag.setAttribute('name', 'customers');
-            // selectTag.setAttribute('size', '2');
-            selectTag.setAttribute("class", "edc-slctag");
-            selectTag.setAttribute('id', 'customers');
-            if (this.dropDown.selectedIndex === -1) {
-                let optionTag = document.createElement('option');
-                optionTag.setAttribute('value', '');
-                optionTag.setAttribute('selected', "");
-                optionTag.setAttribute('disabled', "");
-                optionTag.setAttribute('hidden', "");
-                if (this.dropDown.placeHolder) {
-                    optionTag.innerText = this.dropDown.placeHolder;
+            if (this.tempId && this.isNullOrUndefined(this.dropDownObj.dataSource)) {
+                selectTag = document.getElementById(this.tempId);
+                selectTag.style.display = "none";
+                divElement.appendChild(selectTag);
+                this.tempId = divElement.id;
+                optionTags = selectTag.querySelectorAll("option");
+                let tempData = [];
+                for (let i = 0; i < optionTags.length; i++) {
+                    tempData.push(optionTags[i].innerText);
                 }
-                selectTag.appendChild(optionTag);
+                this.dropDownObj.dataSource = tempData;
             }
-            for (let i = 0; this.dropDown && this.dropDown.dataSource && i < this.dropDown.dataSource.length; i++) {
-                let optionTag = document.createElement('option');
-                optionTag.setAttribute("class", "edc-ddl-opt");
-                optionTag.setAttribute('value', this.dropDown.dataSource[i] + "");
-                if (this.dropDown.selectedIndex && this.dropDown.selectedIndex === i) {
-                    optionTag.setAttribute('selected', 'selected');
-                }
-                optionTag.innerText = this.dropDown.dataSource[i] + "";
-                selectTag.appendChild(optionTag);
+            else if (document.getElementById(this.tempId) instanceof HTMLSelectElement && !this.isNullOrUndefined(this.dropDownObj.dataSource)) {
+                selectTag = document.getElementById(this.tempId);
+                selectTag.style.display = "none";
+                divElement.appendChild(selectTag);
+                this.tempId = divElement.id;
             }
+            if (this.dropDownObj.selectedIndex != undefined && this.dropDownObj.selectedIndex != null && this.dropDownObj.dataSource) {
+                inputValue = this.dropDownObj.dataSource[this.dropDownObj.selectedIndex];
+            }
+            else if (this.dropDownObj.placeHolder) {
+                inputValue = this.dropDownObj.placeHolder;
+            }
+            let inputElement = new edc_input_ts_1.Input({
+                value: inputValue
+            });
+            inputElement.appendTo(divElement);
+            inputElement.addClassList(["edc-ddl-input"]);
             downIconTag.setAttribute("class", "fa-solid fa-chevron-down edc-ddl-icon");
-            divElement.appendChild(selectTag);
             divElement.appendChild(downIconTag);
+            let this_1 = this;
+            divElement.addEventListener("click", function () {
+                this_1.ddClickHandler(this);
+            });
             this.element = divElement;
+        }
+        popupOptionClickHandler(liSelectedElement) {
+        }
+        ddClickHandler(element) {
+            if (element.classList.contains("edc-icon-anim")) {
+                element.classList.remove("edc-icon-anim");
+                let popupElement = document.getElementById("dd_popup");
+                popupElement.remove();
+            }
+            else {
+                element.classList.add("edc-icon-anim");
+                let divElement = document.createElement("div");
+                divElement.style.width = element.clientWidth + 2 + "px";
+                divElement.id = "dd_popup";
+                let ulElement = document.createElement("ul");
+                for (let i = 0; this.dropDownObj && this.dropDownObj.dataSource && i < this.dropDownObj.dataSource.length; i++) {
+                    let liElement = document.createElement("li");
+                    let this_1 = this;
+                    liElement.addEventListener("click", function () {
+                        this_1.popupOptionClickHandler(this);
+                    });
+                    liElement.innerText = this.dropDownObj.dataSource[i];
+                    ulElement.appendChild(liElement);
+                }
+                divElement.appendChild(ulElement);
+                let popup = new edc_popup_ts_1.PopUp({
+                    height: this.dropDownObj.popUpHeight
+                }, divElement);
+                popup.appendTo(divElement);
+                document.body.appendChild(divElement);
+            }
         }
     }
     exports.DropDownList = DropDownList;

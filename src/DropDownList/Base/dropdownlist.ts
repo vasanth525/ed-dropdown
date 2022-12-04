@@ -1,54 +1,102 @@
 // import { ComponentBase } from "../../Base/component";
 import { ComponentBase } from "edc_base_ts";
+import { PopUp } from "edc_popup_ts";
+import { Input } from "edc_input_ts";
 import { IDropDown } from "./interface";
 
 //component
 
 export class DropDownList extends ComponentBase {
-  public dropDown: IDropDown;
+  public dropDownObj: IDropDown;
   constructor(sampleObj: IDropDown, public element?: HTMLElement) {
     super(element);
-    this.dropDown = sampleObj;
+    this.dropDownObj = sampleObj;
   }
 
   public render() {
     this.createDD();
   }
-
+  
   private createDD() {
     let divElement: HTMLElement = document.createElement("div");
-    let selectTag: HTMLElement = document.createElement('select');
+    divElement.classList.add("edc-ddl");
+    divElement.id = "dd_input";
+    let inputValue: string | number | undefined;
+    let selectTag: HTMLSelectElement | null;
+    let optionTags: NodeListOf<HTMLElement>;
     let downIconTag: HTMLElement = document.createElement("i");
-    divElement.setAttribute("class", "edc-ddl")
-    selectTag.setAttribute('name', 'customers');
-    // selectTag.setAttribute('size', '2');
-    selectTag.setAttribute("class", "edc-slctag");
-    selectTag.setAttribute('id', 'customers');
-    if (this.dropDown.selectedIndex === -1) {
-      let optionTag: HTMLElement = document.createElement('option');
-      optionTag.setAttribute('value', '');
-      optionTag.setAttribute('selected', "");
-      optionTag.setAttribute('disabled', "");
-      optionTag.setAttribute('hidden', "");
-      if (this.dropDown.placeHolder) {
-        optionTag.innerText = this.dropDown.placeHolder;
+
+    if (this.tempId && this.isNullOrUndefined(this.dropDownObj.dataSource)) {
+      selectTag = document.getElementById(this.tempId) as HTMLSelectElement;
+      selectTag.style.display = "none";
+      divElement.appendChild(selectTag);
+      this.tempId = divElement.id;
+      optionTags = selectTag.querySelectorAll("option");
+      let tempData: string[] = [];
+      for (let i: number = 0; i < optionTags.length; i++) {
+        tempData.push(optionTags[i].innerText);
       }
-      selectTag.appendChild(optionTag);
+      this.dropDownObj.dataSource = tempData;
     }
-    for (let i: number = 0; this.dropDown && this.dropDown.dataSource && i < this.dropDown.dataSource.length; i++) {
-      let optionTag: HTMLElement = document.createElement('option');
-      optionTag.setAttribute("class", "edc-ddl-opt");
-      optionTag.setAttribute('value', this.dropDown.dataSource[i] + "");
-      if (this.dropDown.selectedIndex && this.dropDown.selectedIndex === i) {
-        optionTag.setAttribute('selected', 'selected');
-      }
-      optionTag.innerText = this.dropDown.dataSource[i] + "";
-      selectTag.appendChild(optionTag);
+    else if (document.getElementById(this.tempId as string) instanceof HTMLSelectElement && !this.isNullOrUndefined(this.dropDownObj.dataSource)) {
+      selectTag = document.getElementById(this.tempId as string) as HTMLSelectElement;
+      selectTag.style.display = "none";
+      divElement.appendChild(selectTag);
+      this.tempId = divElement.id;
     }
+
+    if (this.dropDownObj.selectedIndex != undefined && this.dropDownObj.selectedIndex != null && this.dropDownObj.dataSource) {
+      inputValue = this.dropDownObj.dataSource[this.dropDownObj.selectedIndex];
+    }
+    else if (this.dropDownObj.placeHolder) {
+      inputValue = this.dropDownObj.placeHolder;
+    }
+    let inputElement: Input = new Input({
+      value: inputValue
+    });
+    inputElement.appendTo(divElement);
+    inputElement.addClassList(["edc-ddl-input"]);
     downIconTag.setAttribute("class", "fa-solid fa-chevron-down edc-ddl-icon");
-    divElement.appendChild(selectTag);
     divElement.appendChild(downIconTag);
+    let this_1 = this;
+    divElement.addEventListener("click", function() {
+      this_1.ddClickHandler(this)
+    });
     this.element = divElement;
+  }
+
+  private popupOptionClickHandler(liSelectedElement: HTMLElement) {
+
+  }
+  
+  private ddClickHandler(element: HTMLElement) {
+    if (element.classList.contains("edc-icon-anim")) {
+      element.classList.remove("edc-icon-anim");
+      let popupElement: HTMLElement = document.getElementById("dd_popup") as HTMLElement;
+      popupElement.remove();
+    }
+    else {
+      element.classList.add("edc-icon-anim");
+      let divElement: HTMLElement = document.createElement("div");
+      divElement.style.width = element.clientWidth + 2 + "px";
+      divElement.id = "dd_popup";
+      let ulElement: HTMLElement = document.createElement("ul");
+      for (let i: number = 0; this.dropDownObj && this.dropDownObj.dataSource && i < this.dropDownObj.dataSource.length; i++) {
+        let liElement: HTMLElement = document.createElement("li");
+        let this_1 = this;
+        liElement.addEventListener("click", function() {
+          this_1.popupOptionClickHandler(this)
+        });
+        liElement.innerText = this.dropDownObj.dataSource[i] as string;
+        ulElement.appendChild(liElement);
+      }
+      divElement.appendChild(ulElement);
+      let popup: PopUp = new PopUp({
+        height: this.dropDownObj.popUpHeight
+      }, divElement);
+      popup.appendTo(divElement);
+      document.body.appendChild(divElement);
+    }
   }
 }
 
